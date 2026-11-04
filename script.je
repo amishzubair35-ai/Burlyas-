@@ -1,0 +1,47 @@
+const products = [
+ {id:1,name:"Chicken Strips",desc:"3 Chicken Strips with a sauce to choose",price:390,img:"assets/chicken-strips.jpg",cat:"New Arrival"},
+ {id:2,name:"Thin Crust Beef Pepperoni",desc:"Crispy thin crust topped with beef pepperoni and mozzarella cheese",price:1480,img:"assets/pepperoni-pizza.jpg",cat:"Thin Crust Pizza"},
+ {id:3,name:"Thin Crust Veggie Lover",desc:"Cheese blend, mushrooms, sweet corn, black olives and onion",price:1280,img:"assets/veggie-pizza.jpg",cat:"Thin Crust Pizza"},
+ {id:4,name:"Thin Crust Cheese Lover",desc:"Extra special mozzarella blend and signature sauce on a crisp crust",price:1290,img:"assets/cheese-pizza.jpg",cat:"Thin Crust Pizza"},
+ {id:5,name:"Malai Tikka Pizza",desc:"Creamy malai tikka with cheese and signature sauce",price:1390,img:"assets/category-malai-tikka.jpg",cat:"Malai Tikka"},
+ {id:6,name:"Loaded Starters",desc:"A tasty selection to share with friends",price:650,img:"assets/category-starters.jpg",cat:"Starters"}
+];
+let cart = {};
+const $ = id => document.getElementById(id);
+const productList = $("productList");
+function renderProducts(list=products){
+ productList.innerHTML = list.map(p=>`<article class="product"><img src="${p.img}" alt="${p.name}"><div class="product-info"><h3>${p.name}</h3><p>${p.desc}</p><span class="price">PKR ${p.price}</span></div><button class="add-btn" onclick="addToCart(${p.id})">+</button></article>`).join("");
+}
+function addToCart(id){cart[id]=(cart[id]||0)+1;updateCart();showToast("Added to your cart");}
+function updateCart(){
+ const count=Object.values(cart).reduce((a,b)=>a+b,0);$("cartCount").textContent=count;
+ const rows=Object.entries(cart).filter(([id,q])=>q>0).map(([id,q])=>{const p=products.find(x=>x.id==id);return `<div class="cart-row"><div><b>${p.name}</b><br><small>PKR ${p.price} × ${q}</small></div><div class="qty"><button onclick="changeQty(${id},-1)">−</button> ${q} <button onclick="changeQty(${id},1)">+</button></div></div>`}).join("");
+ $("cartItems").innerHTML=rows||'<p class="muted">Your cart is empty.</p>';
+ const total=Object.entries(cart).reduce((sum,[id,q])=>sum+products.find(p=>p.id==id).price*q,0);
+ $("cartTotal").textContent="PKR "+total.toLocaleString("en-PK");
+}
+function changeQty(id,n){cart[id]=(cart[id]||0)+n;if(cart[id]<=0)delete cart[id];updateCart();}
+function showToast(msg){const t=$("toast");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),1800);}
+function filterCategory(cat){$("menuTitle").textContent=cat;renderProducts(products.filter(p=>p.cat===cat));$("menuSection").scrollIntoView({behavior:"smooth"});}
+renderProducts();updateCart();
+
+$("menuOpen").onclick=()=>{$("drawer").classList.add("open");$("overlay").classList.add("show")};
+$("overlay").onclick=()=>{$("drawer").classList.remove("open");$("overlay").classList.remove("show")};
+$("addressOpen").onclick=()=>{$("addressModal").classList.add("open")};
+$("addressClose").onclick=()=>{$("addressModal").classList.remove("open")};
+$("newAddress").onclick=()=>{const a=prompt("Enter your delivery area or address:");if(a){$("addressLabel").textContent=a;$("addressModal").classList.remove("open");showToast("Address selected");}};
+$("addAddress").onclick=()=>$("newAddress").click();
+document.querySelectorAll('input[name="address"]').forEach(r=>r.onchange=()=>{$("addressLabel").textContent="Home";$("addressModal").classList.remove("open")});
+document.querySelectorAll(".category-card").forEach(b=>b.onclick=()=>filterCategory(b.dataset.category));
+$("viewAll").onclick=()=>{$("menuTitle").textContent="All Menu";renderProducts();$("menuSection").scrollIntoView({behavior:"smooth"})};
+$("resetFilter").onclick=()=>{$("menuTitle").textContent="Popular Menu";renderProducts()};
+$("heroExplore").onclick=()=>$("menuSection").scrollIntoView({behavior:"smooth"});
+$("drawerExplore").onclick=()=>{$("drawer").classList.remove("open");$("overlay").classList.remove("show");$("menuSection").scrollIntoView({behavior:"smooth"})};
+$("savedAddress").onclick=()=>$("addressOpen").click();
+$("cartTop").onclick=()=>$("cartPanel").classList.add("open");
+$("cartClose").onclick=()=>$("cartPanel").classList.remove("open");
+$("checkout").onclick=()=>{if(!Object.keys(cart).length){showToast("Your cart is empty");return;}showToast("Demo website: checkout can be connected later");};
+$("deliveryTab").onclick=()=>{ $("deliveryTab").classList.add("active");$("pickupTab").classList.remove("active");showToast("Delivery selected");};
+$("pickupTab").onclick=()=>{ $("pickupTab").classList.add("active");$("deliveryTab").classList.remove("active");showToast("Pick-up selected");};
+document.querySelectorAll(".nav-item").forEach(b=>b.onclick=()=>{document.querySelectorAll(".nav-item").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");if(b.dataset.nav==="EXPLORE")$("menuSection").scrollIntoView({behavior:"smooth"});else if(b.dataset.nav!=="HOME")showToast(b.dataset.nav+" section coming soon");});
+$("contactBtn").onclick=()=>showToast("Add your business phone number here");

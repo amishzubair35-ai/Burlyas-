@@ -6,6 +6,30 @@
   <meta name="theme-color" content="#ffca05">
   <title>BURLEY'S | Make It Great</title>
   <link rel="stylesheet" href="style.css">
+<div class="gallery">
+    <img src="category-malai-tikka.jpg">
+    <img src="burlyas-logo.jpg">
+    <img src="category-new-arrival.jpg">
+    <img src="category-somewhat-local.jpg">
+    <img src="category-starters.jpg">
+    <img src="category-thin-crust.jpg">
+    <img src="cheese-pizza.jpg">
+    <img src="chicken-strips.jpg">
+    <img src="pepperoni-pizza.jpg">
+    <img src="veggie-pizza.jpg">
+</div>
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.gallery img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 12px;
+}
 </head>
 <body>
   <header class="topbar">

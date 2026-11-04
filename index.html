@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ffca05">
+  <title>BURLEY'S | Make It Great</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="round menu-btn" id="menuOpen" aria-label="Open menu">☰</button>
+    <button class="deliver-to" id="addressOpen">Deliver to <b id="addressLabel">Choose address</b>⌄</button>
+    <button class="round cart-top" id="cartTop" aria-label="Cart">🛒<span id="cartCount">0</span></button>
+  </header>
+
+  <main>
+    <section class="delivery-tabs">
+      <button class="tab active" id="deliveryTab">🛵 &nbsp; DELIVERY</button>
+      <button class="tab" id="pickupTab">▣ &nbsp; PICK-UP</button>
+    </section>
+
+    <section class="hero">
+      <div class="hero-copy">
+        <span class="eyebrow">BURLEY'S ONLINE</span>
+        <h1>Make It<br><em>Great!</em></h1>
+        <p>Good food. Great mood.</p>
+        <button class="yellow-btn" id="heroExplore">EXPLORE MENU</button>
+      </div>
+      <img src="assets/burlyas-logo.jpg" alt="Burlyas logo" class="hero-logo">
+    </section>
+
+    <section class="section">
+      <div class="section-head"><h2>Explore Menu</h2><button class="text-btn" id="viewAll">VIEW ALL</button></div>
+      <div class="category-grid">
+        <button class="category-card" data-category="New Arrival"><img src="assets/category-new-arrival.jpg"><span>New Arrival</span></button>
+        <button class="category-card" data-category="Thin Crust Pizza"><img src="assets/category-thin-crust.jpg"><span>Thin Crust Pizza</span></button>
+        <button class="category-card" data-category="Malai Tikka"><img src="assets/category-malai-tikka.jpg"><span>Malai Tikka</span></button>
+        <button class="category-card" data-category="Starters"><img src="assets/category-starters.jpg"><span>Starters</span></button>
+        <button class="category-card" data-category="Somewhat Local"><img src="assets/category-somewhat-local.jpg"><span>Somewhat Local</span></button>
+      </div>
+    </section>
+
+    <section class="section menu-section" id="menuSection">
+      <div class="section-head"><h2 id="menuTitle">Popular Menu</h2><button class="text-btn" id="resetFilter">ALL ITEMS</button></div>
+      <div class="product-list" id="productList"></div>
+    </section>
+
+    <section class="section recent">
+      <div class="section-head"><h2>Recent Orders</h2><span class="muted">VIEW ALL</span></div>
+      <div class="order-card"><b>No recent orders yet</b><p>Your orders will appear here.</p></div>
+    </section>
+  </main>
+
+  <nav class="bottom-nav">
+    <button class="nav-item selected" data-nav="HOME"><span>⌂</span>HOME</button>
+    <button class="nav-item" data-nav="EXPLORE"><span>⌕</span>EXPLORE</button>
+    <button class="nav-item" data-nav="VOUCHERS"><span>◇</span>VOUCHERS</button>
+    <button class="nav-item" data-nav="BRANCHES"><span>▣</span>BRANCHES</button>
+  </nav>
+
+  <div class="overlay" id="overlay"></div>
+  <aside class="drawer" id="drawer">
+    <div class="profile">
+      <img src="assets/burlyas-logo.jpg" alt="Burlyas logo">
+      <h3>Welcome to BURLEY'S</h3><p>Make It Great</p>
+    </div>
+    <button class="drawer-link">▣ &nbsp; Order History <span>›</span></button>
+    <button class="drawer-link">♡ &nbsp; My Favorites <span>›</span></button>
+    <button class="drawer-link" id="drawerExplore">▦ &nbsp; Explore Menu <span>›</span></button>
+    <button class="drawer-link" id="savedAddress">♧ &nbsp; Saved Addresses <span>›</span></button>
+    <button class="drawer-link">☆ &nbsp; Ratings & Feedbacks <span>›</span></button>
+    <button class="drawer-link">↪ &nbsp; Login / Sign up <span>›</span></button>
+    <div class="drawer-bottom"><button class="yellow-btn" id="contactBtn">CONTACT US</button><small>Terms & Conditions · BURLEY'S</small></div>
+  </aside>
+
+  <section class="modal" id="addressModal">
+    <div class="modal-handle"></div>
+    <h2>Add or choose an address</h2>
+    <button class="location-action" id="newAddress">➤ &nbsp; Select new location</button>
+    <div class="saved-address">
+      <label><input type="radio" name="address" value="Home – Rawalpindi" checked><span><b>Home</b><br>Street / area, Rawalpindi</span></label>
+    </div>
+    <button class="outline-btn" id="addAddress">+ ADD NEW ADDRESS</button>
+    <button class="close-modal" id="addressClose">Close</button>
+  </section>
+
+  <section class="cart-panel" id="cartPanel">
+    <div class="section-head"><h2>Your Cart</h2><button class="text-btn" id="cartClose">CLOSE</button></div>
+    <div id="cartItems"><p class="muted">Your cart is empty.</p></div>
+    <div class="cart-total"><b>Total</b><strong id="cartTotal">PKR 0</strong></div>
+    <button class="yellow-btn checkout" id="checkout">CONTINUE</button>
+  </section>
+
+  <div class="toast" id="toast"></div>
+  <script src="script.js"></script>
+</body>
+</html>
